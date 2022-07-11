@@ -19,12 +19,18 @@ export function Posts() {
 
   const queryClient = useQueryClient();
 
+
+
   useEffect(()=> {
       if(currentPage < maxPostPage){
           const nextPage = currentPage +1
-          queryClient.prefetchQuery(["posts", nextPage], () => fetchPosts(nextPage))
+          queryClient.prefetchQuery(
+              ["posts", nextPage],
+              () => fetchPosts(nextPage))
       }
   }, [currentPage, queryClient])
+
+
 
 
   const { data, isError, error, isLoading } = useQuery(
@@ -40,12 +46,12 @@ export function Posts() {
         <h3>Loading...</h3>
     );
 
-
     if(isError) return (
         <>
             <h3> Oops, something went wrong </h3>
             <p>{error.toString()}</p>
         </>);
+
 
 
   return (
@@ -65,7 +71,7 @@ export function Posts() {
         <button
             disabled={currentPage<=0}
             onClick={() => {
-                setCurrentPage(previousValue => previousValue-1);
+                setCurrentPage(previousValue => previousValue - 1);
             }}>
           Previous page
         </button>
